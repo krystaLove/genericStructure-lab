@@ -18,5 +18,4 @@ void swapInt(void *a, void *b){
     memcpy(c, a, sizeof(void *));
     memcpy(a, b, sizeof(void*));
     memcpy(b, c, sizeof(void*));
-
 }

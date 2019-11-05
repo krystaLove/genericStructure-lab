@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "tInteger.h"
+
 void* copyInt(void *data){
     int *a = (int*) calloc(1, sizeof(int));
     *a = *((int*) data);
@@ -15,7 +17,17 @@ void printInt(void *a){
 }
 void swapInt(void *a, void *b){
     void *c = malloc(sizeof(void*));
-    memcpy(c, a, sizeof(void *));
-    memcpy(a, b, sizeof(void*));
-    memcpy(b, c, sizeof(void*));
+    memcpy(c, a, sizeof(int));
+    memcpy(a, b, sizeof(int));
+    memcpy(b, c, sizeof(int));
+    free(c);
+}
+void* defaultInt(){
+    int *a = malloc(sizeof(int));
+    *a = DEF_INT_VALUE;
+    return a;
+}
+
+void copyIntTo(void *dest, void* source){
+    memcpy((int*) dest, (int*) source, sizeof(int));
 }

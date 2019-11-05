@@ -6,5 +6,6 @@ typedef struct {
 tVector* constructVector(int);
 void insertVector(tVector*, void*, void* (*tCopy)(void*));
 void printVector(tVector*, void (*tPrint)(void*));
-void sortVector(tVector*, int (*tCompare)(const void*, const void*), void (*tSwap)(void*, void*));
 void freeVector(tVector *v);
+int changeValueByPosVector(tVector *v, int pos, void* data, void* (*tCopy)(void*));
+tVector* copyVector(tVector *v, void* (*tCopy) (void*));

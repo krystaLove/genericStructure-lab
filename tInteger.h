@@ -9,5 +9,6 @@ void printInt(void *data);
 void swapInt(void*, void*);
 void* defaultInt();
 void copyIntTo(void *dest, void* source);
+void freeInt(void* data);
 
 #endif

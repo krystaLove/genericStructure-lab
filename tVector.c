@@ -49,22 +49,20 @@ tVector* copyVector(tVector *v, void* (*tCopy) (void*)){
 
     return copy;
 }
-int changeValueByPosVector(tVector *v, int pos, void* data, void* (*tCopy)(void*), void (*tCopyTo)(void*, void*)){
+int changeValueByPosVector(tVector *v, int pos, void* data, void* (*tCopy)(void*), void (*tFree)(void*)){
     if(pos >= v->size) return -1;
-    void* copy = tCopy(data);
-    if(v->array[pos] == NULL)
-        v->array[pos] = tCopy(data);
-    else
-        tCopyTo(v->array[pos], copy);
-    free(copy);
+    if(v->array[pos] != NULL)
+        tFree(v->array[pos]);
+
+    v->array[pos] = tCopy(data);
 }
-void freeVector(tVector *vec){
+void freeVector(tVector *vec, void (*tFree)(void*)){
     int i;
     for(i = 0; i < vec->capacity; i++)
-        free(vec->array[i]);
+        tFree(vec->array[i]);
     free(vec->array);
     free(vec);
 }
-void sortVector(tVector *vec, void (*swap) (void*, void*), int (*comp)(const void *, const void *)){
-    quickSort(vec->array, 0, vec->size - 1, swap, comp);
+void sortVector(tVector *vec, int (*comp)(const void *, const void *)){
+    quickSort(vec->array, 0, vec->size - 1, comp);
 }

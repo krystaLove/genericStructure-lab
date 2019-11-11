@@ -31,3 +31,6 @@ void* defaultDouble(){
 void copyDoubleTo(void *dest, void* source){
     memcpy((double*) dest, (double*) source, sizeof(double));
 }
+void freeDouble(void *data){
+    free((double*)data);
+}

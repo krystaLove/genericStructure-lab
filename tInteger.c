@@ -31,3 +31,6 @@ void* defaultInt(){
 void copyIntTo(void *dest, void* source){
     memcpy((int*) dest, (int*) source, sizeof(int));
 }
+void freeInt(void* data){
+    free((int*)data);
+}

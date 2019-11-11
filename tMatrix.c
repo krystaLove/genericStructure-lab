@@ -3,13 +3,14 @@
 
 #include "tMatrix.h"
 
-tMatrix* constructMatrix(int constColumns, void* (*defValue)()){
+tMatrix* constructMatrix(int constColumns, void* (*defValue)(), void (*tFree)(void*)){
     tMatrix* matrix = (tMatrix*) malloc(sizeof(tMatrix));
     matrix->n = 0;
     matrix->m = constColumns;
     matrix->capacity = 8;
     matrix->matrix = (tVector**) calloc(sizeof(tVector*), matrix->capacity);
     matrix->defValue = defValue;
+    matrix->tFree = tFree;
 
     return matrix;
 }
@@ -26,15 +27,15 @@ int addVectorToMatrix(tMatrix *mat, tVector *vec, void* (*tCopy)(void*)){
     if(vec->size > mat->m) return -1;
 
     addRowMatrix(mat, tCopy);
-    freeVector(mat->matrix[mat->n - 1]);
+    freeVector(mat->matrix[mat->n - 1], mat->tFree);
     mat->matrix[mat->n - 1] = copyVector(vec, tCopy);
 
     return 1;
 }
-int insertMatrix(tMatrix* mat, void *data, int pos_i, int pos_j, void* (*tCopy)(void *), void (*tCopyTo)(void*, void*)){
+int insertMatrix(tMatrix* mat, void *data, int pos_i, int pos_j, void* (*tCopy)(void *)){
     if(pos_i > mat->n || pos_j >= mat->m) return -1;
     if(pos_i == mat->n) addRowMatrix(mat, tCopy);
-    changeValueByPosVector(mat->matrix[pos_i], pos_j, data, tCopy, tCopyTo);
+    changeValueByPosVector(mat->matrix[pos_i], pos_j, data, tCopy, mat->tFree);
     return 0;
 }
 void printMatrix(tMatrix* mat, void (*tPrint)(void *)){
@@ -49,15 +50,15 @@ void printMatrix(tMatrix* mat, void (*tPrint)(void *)){
 void freeMatrix(tMatrix* mat){
     int i;
     for(i = 0; i < mat->n; i++){
-        freeVector(mat->matrix[i]);
+        freeVector(mat->matrix[i], mat->tFree);
        // printf("CLEANING VECTOR\n");
     }
     free(mat->matrix);
     free(mat);
 }
-void sortMatrix(tMatrix* mat, void (*swap) (void*, void*), int (*comp)(const void *, const void *)){
+void sortMatrix(tMatrix* mat, int (*comp)(const void *, const void *)){
     int i;
     for(i = 0; i < mat->n; i++){
-        sortVector(mat->matrix[i], swap, comp);
+        sortVector(mat->matrix[i], comp);
     }
 }

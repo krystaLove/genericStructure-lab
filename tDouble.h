@@ -9,5 +9,6 @@ void printDouble(void *data);
 void swapDouble(void*, void*);
 void* defaultDouble();
 void copyDoubleTo(void *dest, void* source);
+void freeDouble(void* data);
 
 #endif

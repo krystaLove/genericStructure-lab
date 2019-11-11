@@ -9,7 +9,7 @@ static int HoarPartition(void** arr, int l, int r, int (*comp)(const void*, cons
         do {
             j = j - 1;
         } while(comp(arr[j], x) > 0);
-        if(i > j) return j;
+        if(i >= j) return i;
 
         void *tmp = arr[i];
         arr[i] = arr[j];

@@ -52,8 +52,8 @@ void matrixTrial(){
 
 }
 int main() {
-    //matrixTrial();
+    matrixTrial();
     //vectorTrial2();
-    charTrial();
+    //charTrial();
     return 0;
 }

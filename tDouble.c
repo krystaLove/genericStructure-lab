@@ -1,8 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "tDouble.h"
+
+#define EPS 1e-5
 
 void* copyDouble(void *data){
     double *a = (double*) calloc(1, sizeof(double));
@@ -10,7 +13,14 @@ void* copyDouble(void *data){
     return a;
 }
 int compareDouble(const void *a, const void *b){
-    return *((double*) a) - *((double*) b);
+    double first = *(double*)a;
+    double second = *(double*)b;
+
+    if(fabs(first - second) < EPS) return 0;
+
+    if(first < second) return -1;
+
+    return 1;
 }
 void printDouble(void *a){
     printf("%f", *((double*) a));
